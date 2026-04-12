@@ -1,88 +1,61 @@
-# 🧠 AEGIS-X SWARM SECURITY SYSTEM (FINAL README)
+# 🧠 AEGIS-X PRO SWARM SECURITY SYSTEM (FINAL README)
 
 ---
 
 # 📌 PROJECT OVERVIEW
 
-Aegis-X is a **low-cost, AI-powered autonomous swarm security system** designed for real-time surveillance and threat response.
+**Aegis-X Pro** is a **distributed AI-based surveillance and security system** combining:
 
-It integrates:
+* 👁 AI Vision (intrusion detection)
+* 🤖 Swarm robotics (2 autonomous bots)
+* 🔐 Cybersecurity firewall (attack detection)
+* 📹 Live video streaming
+* 📊 Real-time analytics (graphs + logs)
+* 🎛 Professional dashboards
 
-* 👁 **AI Vision Detection (Intrusion Detection)**
-* 🤖 **Dual Bot Swarm (Autonomous Patrol + Converge)**
-* 🔐 **Cybersecurity Firewall (Attack Detection)**
-* 🎛 **Multi-Device GUI Dashboards**
+This system works **completely on a local network (no internet required)**.
 
 ---
 
 # 🧩 SYSTEM ARCHITECTURE
 
 ```
-GPU Laptop (Vision AI + GUI)
+[ GPU Laptop ]
+(Vision AI + Camera Streaming)
         ↓
-HP Laptop (Main Brain + Swarm Logic + Dashboard)
+[ HP Laptop ]
+(Main Brain + Dashboard + Graphs)
         ↓
-Bot 1 (Front)     Bot 2 (Back)
+[ Bot 1 ]       [ Bot 2 ]
 
-Primebook / Any Laptop (Firewall AI + Dashboard)
+[ Firewall Laptop ]
+(Cybersecurity + GUI)
         ↓
-HP Laptop (Cyber Alerts)
+[ HP Laptop ]
 ```
 
 ---
 
-# ⚙️ CORE SYSTEM LOGIC
+# ⚙️ CORE LOGIC
 
 ```
-NORMAL MODE → Bots patrol area autonomously
-INTRUSION → Both bots converge toward target
-NO ACTIVITY → Resume patrol after delay
-CYBER ATTACK → All bots STOP immediately
-FAILSAFE → Remaining bot continues if one fails
+PATROL MODE → Bots move in predefined pattern
+INTRUSION → Bots converge to target
+NO ACTIVITY → Return to patrol
+CYBER ATTACK → Bots STOP immediately
+FAILSAFE → One bot continues if other fails
 ```
 
 ---
 
 # 💻 DEVICE ROLES
 
-| Device                 | Role                              |
-| ---------------------- | --------------------------------- |
-| GPU Laptop             | Vision AI (Object Detection)      |
-| HP Laptop              | Brain + Swarm Control + Dashboard |
-| Primebook / Any Laptop | Firewall AI                       |
-| ESP8266 Bots           | Movement Execution                |
-
----
-
-# ❓ CAN PRIMEBOOK CODE RUN ON WINDOWS?
-
-✅ **YES — FULLY COMPATIBLE**
-
-The firewall code uses:
-
-* Flask
-* NumPy
-* Scikit-learn
-
-👉 These run on:
-
-* Windows ✔
-* Linux ✔
-* Mac ✔
-
-📌 On Windows, just install using:
-
-```
-pip install flask numpy scikit-learn requests
-```
-
----
-
-# 🌐 NETWORK REQUIREMENTS
-
-* All devices must be on **same WiFi network**
-* Disable mobile data
-* Note all IP addresses
+| Device          | Role                            |
+| --------------- | ------------------------------- |
+| GPU Laptop      | AI Detection + Camera Streaming |
+| HP Laptop       | Main Brain + Dashboard + Graphs |
+| Firewall Laptop | Cybersecurity System            |
+| ESP8266 Bots    | Movement Execution              |
 
 ---
 
@@ -90,33 +63,33 @@ pip install flask numpy scikit-learn requests
 
 ---
 
-## 🟢 GPU LAPTOP (VISION AI)
+## 🟢 GPU LAPTOP
 
 ```
-pip install ultralytics opencv-python requests tkinter
-```
-
----
-
-## 🔵 HP LAPTOP (MAIN BRAIN)
-
-```
-pip install flask requests
+pip install ultralytics opencv-python flask requests tkinter
 ```
 
 ---
 
-## 🟡 FIREWALL DEVICE (PRIMEBOOK OR WINDOWS LAPTOP)
+## 🔴 HP LAPTOP
 
 ```
-pip install flask numpy scikit-learn requests
+pip install flask requests matplotlib
 ```
 
 ---
 
-## 🤖 ESP8266 SETUP (ARDUINO IDE)
+## 🟡 FIREWALL LAPTOP (THONNY / WINDOWS)
 
-Install:
+```
+pip install flask requests matplotlib
+```
+
+---
+
+## 🤖 ESP8266
+
+Install in Arduino IDE:
 
 * ESP8266 Board Package
 * ESP8266WiFi
@@ -124,33 +97,70 @@ Install:
 
 ---
 
-# 🔌 HARDWARE (BOT)
+# 🌐 NETWORK REQUIREMENTS
 
-## Wiring
+* All devices must be on the **same WiFi network**
+* Use **local IP addresses**
+* Disable mobile data
+
+---
+
+# 🔧 CONFIGURATION
+
+---
+
+## Replace these in ALL codes:
+
+---
+
+### HP Laptop IP
 
 ```
-L298N → ESP8266
-
-IN1 → D1
-IN2 → D2
-IN3 → D3
-IN4 → D4
-
-Battery → L298N
-L298N 5V → ESP Vin
-GND → Common
+http://<HP_IP>:5001
 ```
 
 ---
 
-# 🚀 EXECUTION STEPS
+### Vision Laptop IP
+
+```
+http://<VISION_IP>:8000/video
+```
 
 ---
 
-## 1️⃣ Start Main Brain (HP Laptop)
+### Bot IPs
 
 ```
-python brain_swarm.py
+http://<BOT1_IP>/control
+http://<BOT2_IP>/control
+```
+
+---
+
+---
+
+# 🚀 EXECUTION STEPS (IMPORTANT ORDER)
+
+---
+
+## 1️⃣ Start Vision System (GPU Laptop)
+
+```
+python vision_system.py
+```
+
+👉 Starts:
+
+* AI detection
+* Camera streaming
+
+---
+
+## 2️⃣ Start Main Brain (HP Laptop)
+
+```
+python brain_pro.py
 ```
 
 Open dashboard:
@@ -161,23 +171,64 @@ http://<HP_IP>:5001
 
 ---
 
-## 2️⃣ Start Firewall System
+## 3️⃣ Start Firewall System
 
 ```
-python firewall_gui.py
+python firewall_pro.py
 ```
 
----
-
-## 3️⃣ Start Vision AI
-
-```
-python vision_gui.py
-```
+👉 Opens desktop GUI
 
 ---
 
 ## 4️⃣ Power ON Bots
+
+---
+
+# 📹 LIVE CAMERA FEED
+
+* Camera is connected to GPU laptop
+* Stream is sent to HP dashboard
+* Displayed in real time
+
+---
+
+# 📊 LIVE GRAPHS
+
+---
+
+## Intrusion Graph
+
+* Updates when object detected
+* Shows activity trend
+
+---
+
+## Cyber Attack Graph
+
+* Updates on firewall detection
+* Shows attack frequency
+
+---
+
+# 🤖 BOT CONTROL
+
+---
+
+## Commands:
+
+| Command | Action       |
+| ------- | ------------ |
+| FWD     | Move forward |
+| STOP    | Stop         |
+
+---
+
+## Behavior:
+
+* Patrol → autonomous
+* Intrusion → converge
+* Cyber attack → stop
 
 ---
 
@@ -187,15 +238,8 @@ python vision_gui.py
 
 ## 👁 Intrusion Test
 
-* Stand in camera view
+* Stand in front of camera
   👉 Bots move forward
-
----
-
-## 🛣 Patrol Mode
-
-* No object detected
-  👉 Bots move in patrol pattern
 
 ---
 
@@ -209,18 +253,20 @@ for i in range(30):
     requests.get("http://<FIREWALL_IP>:5000/")
 ```
 
-👉 Bots STOP
+👉 Bots stop
 👉 Dashboard updates
 
 ---
 
 # 🎛 DASHBOARDS
 
-| Device          | Dashboard Type |
-| --------------- | -------------- |
-| GPU Laptop      | Tkinter GUI    |
-| HP Laptop       | Web Dashboard  |
-| Firewall Device | Web Dashboard  |
+---
+
+| Device          | Type                  |
+| --------------- | --------------------- |
+| GPU Laptop      | Vision (local window) |
+| HP Laptop       | Web Dashboard         |
+| Firewall Laptop | Desktop GUI           |
 
 ---
 
@@ -228,9 +274,15 @@ for i in range(30):
 
 ---
 
+## ❌ Camera not showing
+
+* Check Vision IP
+* Ensure script running
+
+---
+
 ## ❌ Bots not moving
 
-* Check battery
 * Check wiring
 * Test manually:
 
@@ -242,12 +294,12 @@ http://BOT_IP/control?cmd=FWD
 
 ## ❌ No communication
 
-* Check IP addresses
-* Ensure same WiFi
+* Same WiFi
+* Correct IP
 
 ---
 
-## ❌ Module error
+## ❌ Modules missing
 
 ```
 pip install <module>
@@ -255,24 +307,19 @@ pip install <module>
 
 ---
 
-## ❌ Camera not opening
-
-* Close other apps using camera
-
----
-
 # 🏆 FINAL OUTPUT
 
-✔ Autonomous dual-bot swarm
+✔ Autonomous swarm bots
 ✔ AI-based intrusion detection
-✔ Cyber attack detection
-✔ Real-time dashboards
-✔ Fully integrated system
+✔ Cybersecurity integration
+✔ Live camera streaming
+✔ Real-time graphs + logs
+✔ Professional dashboards
 
 ---
 
 # 🔥 FINAL STATEMENT
 
-“Aegis-X demonstrates a unified, AI-driven swarm security system capable of autonomous patrol, intelligent threat detection, and adaptive response using low-cost hardware.”
+“Aegis-X Pro is a fully integrated, AI-powered swarm surveillance system capable of autonomous patrol, intelligent threat detection, and real-time response using low-cost hardware and local networking.”
 
 ---
